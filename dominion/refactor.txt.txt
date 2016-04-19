@@ -1,0 +1,3 @@
+I took the smithy, village, great hall, steward, and council room out of CardEffect and created their own functions.
+These functions take the necisarry inputs for the functionality of the card and are called instead of the old implimentation
+where the card effect was written out in CardEffect.
