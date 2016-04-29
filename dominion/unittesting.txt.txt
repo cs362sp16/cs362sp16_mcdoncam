@@ -1,0 +1,5 @@
+Assignment 2 
+Bugs: Bugs with drawing cards for the smithy, failing assert 
+
+For all my unit tests i basically created a game of dominion and a copy game. I would then call a function in one game
+(like drawCard or discardCard) and check it with the copy of the game to see if I got the desired result.
