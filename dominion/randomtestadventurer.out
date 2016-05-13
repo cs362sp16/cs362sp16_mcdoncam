@@ -1,0 +1,20 @@
+RandomTestAdventurer: 42 of 42 TESTS PASSED
+Function 'main'
+Lines executed:100.00% of 29
+Branches executed:55.56% of 18
+Taken at least once:33.33% of 18
+Calls executed:100.00% of 14
+
+File 'randomtestadventurer.c'
+Lines executed:100.00% of 29
+Branches executed:55.56% of 18
+Taken at least once:33.33% of 18
+Calls executed:100.00% of 14
+Creating 'randomtestadventurer.c.gcov'
+
+File '<built-in>'
+No executable lines
+No branches
+No calls
+Removing '<built-in>.gcov'
+

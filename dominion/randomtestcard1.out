@@ -1,0 +1,20 @@
+RandomTestVillage: 42 of 42 TESTS PASSED
+Function 'main'
+Lines executed:100.00% of 25
+Branches executed:100.00% of 8
+Taken at least once:62.50% of 8
+Calls executed:100.00% of 14
+
+File 'randomtestcard1.c'
+Lines executed:100.00% of 25
+Branches executed:100.00% of 8
+Taken at least once:62.50% of 8
+Calls executed:100.00% of 14
+Creating 'randomtestcard1.c.gcov'
+
+File '<built-in>'
+No executable lines
+No branches
+No calls
+Removing '<built-in>.gcov'
+

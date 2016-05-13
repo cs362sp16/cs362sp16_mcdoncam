@@ -1,0 +1,4 @@
+In all the random tests i acheived 100% line coverage with only 42 tests. For randomtestcard1 and randomtestcard2 i also got 100% 
+branch covereage. For randomtest adventurer I only got 55% branch coverage. The random testing has a better chance of finding 
+faults because it can use so many different inouts very quickly to find what will fail. You also get better coverage with 
+random testing as it will explore "all" possiblilities with more and more tests. 
