@@ -85,6 +85,20 @@ randomtests.out: randomtestadventurer randomtestcard1 randomtestcard2
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 	
+testdominion.out: testdominion.c dominion.o rngs.o interface.o
+	gcc -o testdominion -g -std=c99 testdominion.c dominion.o rngs.o interface.o $(CFLAGS)	
+	
+dominion_smitjaco.o: dominion.h dominion_smitjaco.c rngs.o
+	gcc -c -std=c99 dominion_smitjaco.c -g  $(CFLAGS)	
+	
+testdominion_smitjaco.out: testdominion.c dominion_smitjaco.o rngs.o interface.o
+	gcc -o testdominion_smitjaco -g -std=c99 testdominion.c dominion_smitjaco.o rngs.o interface.o $(CFLAGS)		
+
+diffdominion: testdominion.out testdominion_smitjaco.out
+	./testdominion 42 &> myDomTest.out
+	./testdominion_smitjaco 42 &> smitjacoDomTest.out
+	diff -b myDomTest.out smitjacoDomTest.out &> diffResults.out
+	
 clearresults: rm -f *.o unittestresults.out *.gcov *.gcda *.gcno *.so *.a *.dSYM
 
 all: playdom player 

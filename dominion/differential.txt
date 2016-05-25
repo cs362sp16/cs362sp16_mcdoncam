@@ -1,0 +1,3 @@
+The differential testing is not very conclusive. We dont know which version of dominion.c is "right" and 
+it is very likely that both implementations share similar bugs. The tester is also a random tester and 
+it doesnt use the same numbers for each implementation, so most lines are different. 
