@@ -37,8 +37,12 @@ int main(int argc, char** argv){
 		cardEffect(smithy, choice1, choice2, choice3, &game, handPos, &bonus);
 		
 	
-		if(game.handCount[player] > orig.handCount[player]){
+		if(game.handCount[player] == orig.handCount[player] + 2){
 			good++;
+		}else if(game.handCount[player] < orig.handCount[player] || game.handCount[player] == orig.handCount[player]){
+			printf("Draw error\n");
+			printf("Cards in Hand: %d ", game.handCount[player]);
+			printf("Should be: %d ", orig.handCount[player] + 2);
 		}
 		if(good > 0){
 			passed++;

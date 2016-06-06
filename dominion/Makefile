@@ -68,11 +68,20 @@ cardtest4.o: cardtest4.c dominion.o rngs.o
 randomtestcard1: randomtestcard1.c dominion.o rngs.o
 	gcc -o randomtestcard1 -g  -std=c99 randomtestcard1.c dominion.o rngs.o $(CFLAGS)	
 	
+randomtestcard1_danm: randomtestcard1.c dominion_danm.o rngs.o
+	gcc -o randomtestcard1_danm -g  -std=c99 randomtestcard1.c dominion_danm.o rngs.o $(CFLAGS)	
+	
 randomtestcard2: randomtestcard2.c dominion.o rngs.o
 	gcc -o randomtestcard2 -g  -std=c99 randomtestcard2.c dominion.o rngs.o $(CFLAGS)	
 	
+randomtestcard2_danm: randomtestcard2.c dominion_danm.o rngs.o
+	gcc -o randomtestcard2_danm -g  -std=c99 randomtestcard2.c dominion_danm.o rngs.o $(CFLAGS)		
+	
 randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
 	gcc -o randomtestadventurer -g  -std=c99 randomtestadventurer.c dominion.o rngs.o $(CFLAGS)		
+	
+randomtestadventurer_smitjaco: randomtestadventurer.c dominion_smitjaco.o rngs.o
+	gcc -o randomtestadventurer_smitjaco -g  -std=c99 randomtestadventurer.c dominion_smitjaco.o rngs.o $(CFLAGS)		
 	
 randomtests.out: randomtestadventurer randomtestcard1 randomtestcard2
 	./randomtestadventurer 42 &> randomtestadventurer.out
@@ -94,10 +103,24 @@ dominion_smitjaco.o: dominion.h dominion_smitjaco.c rngs.o
 testdominion_smitjaco.out: testdominion.c dominion_smitjaco.o rngs.o interface.o
 	gcc -o testdominion_smitjaco -g -std=c99 testdominion.c dominion_smitjaco.o rngs.o interface.o $(CFLAGS)		
 
+dominion_danm.o: dominion.h dominion_danm.c rngs.o
+	gcc -c -std=c99 dominion_danm.c -g  $(CFLAGS)		
+	
+testdominion_danm.out: testdominion.c dominion_danm.o rngs.o interface.o
+	gcc -o testdominion_danm -g -std=c99 testdominion.c dominion_danm.o rngs.o interface.o $(CFLAGS)	
+	
 diffdominion: testdominion.out testdominion_smitjaco.out
 	./testdominion 42 &> myDomTest.out
 	./testdominion_smitjaco 42 &> smitjacoDomTest.out
 	diff -b myDomTest.out smitjacoDomTest.out &> diffResults.out
+	
+minion_tarantula.out: minion_tarantula.c dominion.o rngs.o
+	gcc -o minion_tarantula -g -std=c99 minion_tarantula.c dominion.o rngs.o $(CFLAGS)	
+	
+tarantula: minion_tarantula.out 
+	chmod u+rwx tarantula.py 
+	python tarantula.py
+	
 	
 clearresults: rm -f *.o unittestresults.out *.gcov *.gcda *.gcno *.so *.a *.dSYM
 

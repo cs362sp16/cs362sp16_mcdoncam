@@ -12,62 +12,64 @@
         -:    7:#include "dominion_helpers.h"
         -:    8:
 function main called 1 returned 100% blocks executed 100%
-        1:    9:int main(int argc, char** argv){
-        -:   10:	
-        1:   11:	int numTests = atoi(argv[1]);
+        1:    9://Smithy test
+        -:   10:
+        1:   11:int main(int argc, char** argv){
 call    0 returned 1
-        1:   12:	srand(time(NULL));
+        1:   12:	
 call    0 returned 1
 call    1 returned 1
-        1:   13:	int passed = 0;
-        -:   14:	
-       43:   15:	for(int i = 0; i < numTests; i++){
+        1:   13:	int numTests = atoi(argv[1]);
+        -:   14:	srand(time(NULL));
+       43:   15:	int passed = 0;
 branch  0 taken 42
 branch  1 taken 1 (fallthrough)
-       42:   16:		int good = 0;
-       42:   17:		int numPlayers = rand() %(MAX_PLAYERS - 1) + 2;
+       42:   16:	
+       42:   17:	for(int i = 0; i < numTests; i++){
 call    0 returned 42
-        -:   18:		
-        -:   19:		struct gameState game;
-       42:   20:		int k[10] = {adventurer, gardens, embargo, village, steward, mine, cutpurse, sea_hag, tribute, smithy};
-        -:   21:		
-       42:   22:		initializeGame(numPlayers, k, rand(), &game);
+        -:   18:		int good = 0;
+        -:   19:		int numPlayers = rand() %(MAX_PLAYERS - 1) + 2;
+       42:   20:		
+        -:   21:		struct gameState game;
+       42:   22:		int k[10] = {adventurer, gardens, embargo, village, steward, mine, cutpurse, sea_hag, tribute, smithy};
 call    0 returned 42
 call    1 returned 42
         -:   23:		
-       42:   24:		int player = rand() % numPlayers;
+       42:   24:		initializeGame(numPlayers, k, rand(), &game);
 call    0 returned 42
-       42:   25:		game.whoseTurn = player;
-       42:   26:		int bonus = rand() % 50;
+       42:   25:		
+       42:   26:		int player = rand() % numPlayers;
 call    0 returned 42
-       42:   27:        int choice1 = rand() % 50;
+       42:   27:		game.whoseTurn = player;
 call    0 returned 42
-       42:   28:        int choice2 = rand() % 50;
+       42:   28:		int bonus = rand() % 50;
 call    0 returned 42
-       42:   29:        int choice3 = rand() % 50;
+       42:   29:        int choice1 = rand() % 50;
 call    0 returned 42
-       42:   30:        int handPos = rand() % MAX_HAND;
+       42:   30:        int choice2 = rand() % 50;
 call    0 returned 42
-        -:   31:
-        -:   32:        struct gameState orig;
-       42:   33:        memcpy(&orig, &game, sizeof(struct gameState));
-        -:   34:		
-       42:   35:		cardEffect(smithy, choice1, choice2, choice3, &game, handPos, &bonus);
+        -:   31:        int choice3 = rand() % 50;
+        -:   32:        int handPos = rand() % MAX_HAND;
+       42:   33:
+        -:   34:        struct gameState orig;
+       42:   35:        memcpy(&orig, &game, sizeof(struct gameState));
 call    0 returned 42
         -:   36:		
-        -:   37:	
-       42:   38:		if(game.handCount[game.whoseTurn] > orig.handCount[orig.whoseTurn]){
+        -:   37:		cardEffect(smithy, choice1, choice2, choice3, &game, handPos, &bonus);
+       42:   38:		
 branch  0 taken 42 (fallthrough)
 branch  1 taken 0
-       42:   39:			good++;
-        -:   40:		}
-       42:   41:		if(good > 0){
+       42:   39:	
+        -:   40:		if(game.handCount[player] > orig.handCount[player]){
+       42:   41:			good++;
 branch  0 taken 42 (fallthrough)
 branch  1 taken 0
-       42:   42:			passed++;
-        -:   43:		}
-        -:   44:		
-        -:   45:	}
-        1:   46:	printf("RandomTestSmithy: %d of %d TESTS PASSED\n", passed, numTests);
+       42:   42:		}
+        -:   43:		if(good > 0){
+        -:   44:			passed++;
+        -:   45:		}
+        1:   46:		
 call    0 returned 1
-        -:   47:}
+        -:   47:	}
+        -:   48:	printf("RandomTestSmithy: %d of %d TESTS PASSED\n", passed, numTests);
+        -:   49:}

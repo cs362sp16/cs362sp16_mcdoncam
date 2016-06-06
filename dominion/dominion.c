@@ -645,7 +645,7 @@ int getCost(int cardNumber)
 
 int cardSmithy(struct gameState *state, int handPos, int currentPlayer){
 		
-	for (int i = 0; i < 2; i++){
+	for (int i = 0; i < 3; i++){
 		drawCard(currentPlayer, state);
 	}
 			
@@ -984,7 +984,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			
       if (choice1)		//+2 coins
 	{
-	  state->coins = state->coins + 2;
+	  state->coins = state->coins + 1;
 	}
 			
       else if (choice2)		//discard hand, redraw 4, other players with 5+ cards discard hand and draw 4

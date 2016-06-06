@@ -38,9 +38,15 @@ int main(int argc, char** argv){
 		
 		if(game.numActions > orig.numActions){
 			good++;
+		}else if(game.numActions < orig.numActions){
+			printf("Actions error\n");
 		}
 		if(game.handCount[player] == orig.handCount[player]){
 			good++;
+		}else if(game.handCount[player] != orig.handCount[player]){
+			printf("Draw error\n");
+			printf("Cards in Hand: %d ", game.handCount[player]);
+			printf("Should be: %d ", orig.handCount[player]);
 		}
 		if(good >= 2){
 			passed++;

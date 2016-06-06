@@ -1,0 +1,114 @@
+        -:    0:Source:testdominion.c
+        -:    0:Graph:testdominion.gcno
+        -:    0:Data:testdominion.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <stdlib.h>
+        -:    3:#include <math.h>
+        -:    4:#include "dominion.h"
+        -:    5:#include "dominion_helpers.h"
+        -:    6:#include "interface.h"
+        -:    7:#include "rngs.h"
+        -:    8:
+        -:    9:#define V 1 
+        -:   10:
+        1:   11:int main (int argc, char** argv) {
+        -:   12:
+        1:   13:    FILE *outs = fopen("gameResults.out", "w");
+        1:   14:    if(outs == NULL){
+    #####:   15:        perror("Could not open write stream for gameResults.out");
+    #####:   16:        exit(EXIT_FAILURE);
+        -:   17:    }
+        -:   18:
+        -:   19:  struct gameState G;
+        -:   20:  int k[10];
+        1:   21:  selectKingdomCards(atoi(argv[1]), k);
+        -:   22:
+        1:   23:  int players = atoi(argv[1]) % 3 + 2;
+        -:   24:
+        1:   25:  fprintf(outs, "Starting game with %d players\n", players);
+        1:   26:  if(V) printf("Starting game with %d players\n", players);
+        -:   27:  
+        1:   28:  initializeGame(players, k, atoi(argv[1]), &G);
+        -:   29:  
+       92:   30:  while (!isGameOver(&G)) {
+       90:   31:    int curplayer = whoseTurn(&G);
+        -:   32:
+        -:   33:    /* Play action cards */
+      520:   34:	for(int i = 0; i < numHandCards(&G) && G.numActions > 0; i++){
+        -:   35:        char playcardname[12+1]; // Max length of card name plus null terminator
+      430:   36:        cardNumToName(G.hand[curplayer][i], playcardname);
+      430:   37:        if(playCard(i, -1, -1, -1, &G) >= 0){
+       23:   38:            fprintf(outs, "[Player %d] Played %s\n", curplayer, playcardname);
+       23:   39:            if(V) printf("[Player %d] Played %s\n", curplayer, playcardname);
+        -:   40:        }else{
+      407:   41:            if(V) printf("[Player %d] Couldn't play %s\n", curplayer, playcardname);
+        -:   42:        }
+        -:   43:    }
+        -:   44:
+        -:   45:    /* Play money cards */
+      543:   46:	for(int i = 0; i < numHandCards(&G); i++){
+      453:   47:	  if (handCard(i, &G) == copper){
+      235:   48:	    playCard(i, -1, -1, -1, &G);
+        -:   49:        char playcardname[12+1];
+      235:   50:        cardNumToName(i, playcardname);
+      235:   51:        fprintf(outs, "[Player %d] Played %s\n", curplayer, playcardname);
+      235:   52:        if(V) printf("[Player %d] Played %s\n", curplayer, playcardname);
+        -:   53:	  }
+      218:   54:	  else if (handCard(i, &G) == silver){
+       25:   55:	    playCard(i, -1, -1, -1, &G);
+        -:   56:        char playcardname[12+1]; 
+       25:   57:        cardNumToName(i, playcardname);
+       25:   58:        fprintf(outs, "[Player %d] Played %s\n", curplayer, playcardname);
+       25:   59:        if(V) printf("[Player %d] Played %s\n", curplayer, playcardname);
+        -:   60:	  }
+      193:   61:	  else if (handCard(i, &G) == gold){
+    #####:   62:	    playCard(i, -1, -1, -1, &G);
+        -:   63:        char playcardname[12+1]; 
+    #####:   64:        cardNumToName(i, playcardname);
+    #####:   65:        fprintf(outs, "[Player %d] Played %s\n", curplayer, playcardname);
+    #####:   66:        if(V) printf("[Player %d] Played %s\n", curplayer, playcardname);
+        -:   67:	  }
+        -:   68:	}
+        -:   69:
+       90:   70:    fprintf(outs, "[Player %d] Coins: %d\n", curplayer, G.coins);
+       90:   71:    if(V) printf("[Player %d] Coins: %d\n", curplayer, G.coins);
+        -:   72:
+        -:   73:    /* Buy more cards */
+     1127:   74:    while(G.numBuys > 0 && !isGameOver(&G)){
+      947:   75:        int buycard = floor(Random() * 26);
+        -:   76:        char buycardname[12+1]; 
+      947:   77:        cardNumToName(buycard, buycardname);
+      947:   78:        if(buyCard(buycard, &G) >= 0){
+       98:   79:            fprintf(outs, "[Player %d] Bought %s for %d coins\n", curplayer, buycardname, getCost(buycard));
+       98:   80:            if(V) printf("[Player %d] Bought %s for %d coins\n", curplayer, buycardname, getCost(buycard));
+        -:   81:        }
+        -:   82:    }
+        -:   83:
+        -:   84:
+       90:   85:    fprintf(outs, "----------\n");
+       90:   86:    if(V) printf("----------\n");
+       90:   87:    endTurn(&G);
+        -:   88:  } // end of While
+        -:   89:
+        1:   90:  fprintf(outs, "Finished game.\n");
+        1:   91:  if(V) printf("Finished game.\n");
+        -:   92:
+        -:   93:  /* Print scores and winners */
+        -:   94:  int playerNum, score[MAX_PLAYERS];
+        1:   95:  int numPlayers = G.numPlayers;
+        3:   96:  for(playerNum = 0; playerNum < numPlayers; playerNum++) {
+        2:   97:    score[playerNum] = scoreFor(playerNum, &G);
+        2:   98:    fprintf(outs, "Player %d has a score of %d\n", playerNum, score[playerNum]);
+        2:   99:    if(V) printf("Player %d has a score of %d\n", playerNum, score[playerNum]);
+        -:  100:  }
+        -:  101:  int winners[MAX_PLAYERS];
+        1:  102:  getWinners(winners, &G);
+        3:  103:  for(playerNum = 0; playerNum < numPlayers; playerNum++) {
+        2:  104:    if(winners[playerNum] == 1) fprintf(outs, "Player %d won!\n", playerNum);
+        2:  105:    if(winners[playerNum] == 1) if(V) printf("Player %d won!\n", playerNum);
+        -:  106:  }
+        -:  107:
+        1:  108:  return 0;
+        -:  109:}

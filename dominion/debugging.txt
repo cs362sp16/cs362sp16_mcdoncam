@@ -1,0 +1,9 @@
+One bug that i fixed in my dominion code was in my smithy implimentation. I had a made a for loop error that caused the wrong amount
+of cards to be given to the player when the smithy was played. Agans/ principles were very usefull in finding this bug.
+Understanding how the card is supposed to work was very important. The bug caused the player who played the card to only draw 2 cards instead 
+of 3. My random tester caught this error, but not my smithy unit test. The bug was caused because when the smithy is played
+the player draws 3 cards and discards the smithy. MY unit test only tested to functionality of drawing the cards but did not check that the card also got discarded.
+The random tester helped me catch the bug because it tested a player playing the card from the players hand. 
+I located the line the bug was on using print statements. I basically encapsulated the function in print statements
+and ran the tester to see where the function would not print a statement, then moved the other print statement until it didnt show.
+This helped me figure out which line of code the bug was on, a binary search type debugging.  

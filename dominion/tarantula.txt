@@ -1,0 +1,4 @@
+To test find a bug with tarantula testing i first added a bug to the minion card in dominion.c. The bug is on line 987 
+it gives the player one coin instead of two. Type "make tarantula" to run the script. minion_tarantula.c is a random tester of the minion 
+card. This is run 100 times by tarantula.py to give suspiciousness data. After running the script it is graphically clear that line 987
+is the most suspicious because it has the longest line of #### and has a suspisiousness rating of 1. Tarantula was a very clear way to locate this bug.
